@@ -1,4 +1,4 @@
 #!/bin/bash
 
 touch ${*/*EMBED=/}
-make "$@" && cp $1 /tmp
+make -j 2 "$@" && cp $1 /tmp

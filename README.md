@@ -42,3 +42,18 @@ docker run -it --rm \
 quay.io/kato/ipxe \
 bin/ipxe.usb EMBED=/tmp/embedded.ipxe
 ```
+
+#### Virtio-net image with a custom embedded script:
+
+```
+docker run -it --rm \
+-v ${PWD}:/tmp \
+quay.io/kato/ipxe \
+bin/virtio-net.isarom EMBED=/tmp/embedded.ipxe
+```
+
+Install the ROM in a VirtualBox VM:
+
+```
+VBoxManage setextradata ${VM_NAME} VBoxInternal/Devices/pcbios/0/Config/LanBootRom ${PWD}/virtio-net.isarom
+```
