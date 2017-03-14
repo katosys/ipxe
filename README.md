@@ -45,6 +45,8 @@ bin/ipxe.usb EMBED=/tmp/embedded.ipxe
 
 #### Virtio-net image with a custom embedded script:
 
+The maximum size for the `isarom` is 57344 bytes.
+
 ```
 docker run -it --rm \
 -v ${PWD}:/tmp \
@@ -52,10 +54,17 @@ quay.io/kato/ipxe \
 bin/virtio-net.isarom EMBED=/tmp/embedded.ipxe
 ```
 
-#### Install the `virtio-net` ROM in a VirtualBox VM:
+##### Install the `virtio-net` ROM in a VirtualBox VM:
 
 ```
 VBoxManage setextradata ${VM_NAME} \
 VBoxInternal/Devices/pcbios/0/Config/LanBootRom \
 ${PWD}/virtio-net.isarom
+```
+
+##### Uninstall the `virtio-net` ROM:
+
+```
+VBoxManage setextradata ${VM_NAME} \
+VBoxInternal/Devices/pcbios/0/Config/LanBootRom
 ```
