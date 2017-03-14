@@ -52,8 +52,10 @@ quay.io/kato/ipxe \
 bin/virtio-net.isarom EMBED=/tmp/embedded.ipxe
 ```
 
-Install the ROM in a VirtualBox VM:
+#### Install the `virtio-net` ROM in a VirtualBox VM:
 
 ```
-VBoxManage setextradata ${VM_NAME} VBoxInternal/Devices/pcbios/0/Config/LanBootRom ${PWD}/virtio-net.isarom
+VBoxManage setextradata ${VM_NAME} \
+VBoxInternal/Devices/pcbios/0/Config/LanBootRom \
+${PWD}/virtio-net.isarom
 ```
