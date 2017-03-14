@@ -25,7 +25,7 @@ quay.io/kato/ipxe \
 bin/ipxe.dsk EMBED=/tmp/embedded.ipxe
 ```
 
-#### ISO image with a custom embedded script:
+#### ISO image with a custom embedded script:
 
 ```
 docker run -it --rm \
