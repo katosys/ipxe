@@ -2,19 +2,15 @@
 
 [![Build Status](https://travis-ci.org/katosys/ipxe.svg?branch=master)](https://travis-ci.org/katosys/ipxe)
 
-This container is used to generate custom `iPXE` images in `PWD`.
-Find below an `iPXE` example script:
+This container is used to generate custom `iPXE` images with embedded scripts.
+Given the `iPXE` script below...
 
 ```
-➜ cat embedded.ipxe
 #!ipxe
-
-dhcp
-set base-url http://stable.release.core-os.net/amd64-usr/current
-kernel ${base-url}/coreos_production_pxe.vmlinuz coreos.autologin=tty1
-initrd ${base-url}/coreos_production_pxe_image.cpio.gz
-boot
+dhcp && chain http://boot.kato/ipxe?roles=quorum,master,worker
 ```
+
+...floppy, ISO and USB images can be generated using the examples below:
 
 #### Floppy image with a custom embedded script:
 
@@ -43,28 +39,16 @@ quay.io/kato/ipxe \
 bin/ipxe.usb EMBED=/tmp/embedded.ipxe
 ```
 
-#### Virtio-net image with a custom embedded script:
+### VirtualBox tips:
 
-The maximum size for the `isarom` is 57344 bytes.
-
-```
-docker run -it --rm \
--v ${PWD}:/tmp \
-quay.io/kato/ipxe \
-bin/virtio-net.isarom EMBED=/tmp/embedded.ipxe
-```
-
-##### Install the `virtio-net` ROM in a VirtualBox VM:
+Using the host's resolver as a DNS proxy in VirtualBox NAT mode:
 
 ```
-VBoxManage setextradata ${VM_NAME} \
-VBoxInternal/Devices/pcbios/0/Config/LanBootRom \
-${PWD}/virtio-net.isarom
+VBoxManage modifyvm ${VM_NAME} --natdnshostresolver1 on
 ```
 
-##### Uninstall the `virtio-net` ROM:
+Now you can edit the host's `/etc/hosts` and add some fake records such as:
 
 ```
-VBoxManage setextradata ${VM_NAME} \
-VBoxInternal/Devices/pcbios/0/Config/LanBootRom
+7.7.7.7 boot.kato
 ```
