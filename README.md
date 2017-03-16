@@ -50,5 +50,5 @@ VBoxManage modifyvm ${VM_NAME} --natdnshostresolver1 on
 Now you can edit the host's `/etc/hosts` and add some fake records such as:
 
 ```
-7.7.7.7 boot.kato
+192.168.1.22 ipxe.kato.one
 ```
